@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".presentations.intro.intro">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/sec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/spacing_xlarge"
+        tools:context=".presentations.intro.intro">
+        <ImageButton
+            android:id="@+id/back"
+            android:contentDescription="back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/baseline_arrow_back_24"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:focusableInTouchMode="true"
+            android:minHeight="48dp"
+            android:minWidth="48dp"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
+
+<ImageView
+    android:layout_marginTop="@dimen/spacing_mxlarge"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/baseline_person_24"
+    android:layout_gravity="center"
+    android:overScrollMode="always"
+    android:layout_marginBottom="20dp"   />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/name_outlier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_mxlarge"
+        android:layoutDirection="ltr"
+        android:textColorHint="@android:color/black"
+
+        tools:layout_editor_absoluteX="0dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/profile"
+            android:hint="Name "
+            android:inputType="numberDecimal"
+            android:padding="@dimen/spacing_large"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/gray"
+            android:textSize="15sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Position"
+       android:textColor="@color/black"
+       android:textSize="15sp"
+       android:gravity="center"
+       android:layout_marginStart="15sp"
+       android:background="@drawable/profile"
+       android:layout_marginTop="@dimen/spacing_mxlarge"
+       />
+    <EditText
+        android:id="@+id/country"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/spacing_large"
+        android:background="@drawable/position"
+        android:paddingVertical="@dimen/spacing_large"
+
+        android:hint="country"
+        android:paddingHorizontal="@dimen/spacing_mxlarge"
+        />
+    <Button
+        android:id="@+id/go_to_home"
+        android:layout_marginHorizontal="@dimen/spacing_smlarge"
+        android:layout_marginTop="@dimen/spacing_mxlarge"
+        android:layout_width="wrap_content"
+        android:background="@drawable/continue_button"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Continue"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:padding="@dimen/spacing_large"
+        />
+
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/name_outlier"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="15dp"-->
+<!--        android:layoutDirection="ltr"-->
+<!--        android:textColorHint="@android:color/black"-->
+
+<!--        tools:layout_editor_absoluteX="0dp">-->
+
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/name"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@drawable/profile"-->
+<!--            android:hint="Name "-->
+<!--            android:inputType="numberDecimal"-->
+<!--            android:padding="@dimen/spacing_large"-->
+<!--            android:textColor="@android:color/black"-->
+<!--            android:textColorHint="@color/gray"-->
+<!--            android:textSize="15sp" />-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+</LinearLayout>
+</ScrollView>
