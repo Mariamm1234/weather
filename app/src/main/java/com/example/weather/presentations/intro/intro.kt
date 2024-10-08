@@ -22,9 +22,6 @@ import com.denzcoskun.imageslider.models.SlideModel
 
 import com.example.weather.R
 import com.example.weather.common.Location.LocationService
-import com.example.weather.common.Tools.flag
-import com.example.weather.common.Tools.latitude
-import com.example.weather.common.Tools.longitude
 import com.example.weather.databinding.ActivityIntroBinding
 
 class intro : AppCompatActivity() {
