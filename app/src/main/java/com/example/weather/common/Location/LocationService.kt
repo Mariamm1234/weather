@@ -69,6 +69,15 @@ val notificationManager=getSystemService(Context.NOTIFICATION_SERVICE) as Notifi
               val long=location.longitude.toString().takeLast(3)
               val updateNotification=notification.setContentText("Location:($lat,$long)")
               notificationManager.notify(1,updateNotification.build())
+
+              // Send a broadcast with the location data to access in activity
+              val intent = Intent("LOCATION_UPDATE")
+              intent.putExtra("latitude", location.latitude)
+              intent.putExtra("longitude", location.longitude)
+              sendBroadcast(intent)
+
+
+
           }
           .launchIn(serviceScope)
       startForeground(1,notification.build(), FOREGROUND_SERVICE_TYPE_LOCATION)

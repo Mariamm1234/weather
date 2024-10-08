@@ -1,13 +1,16 @@
 package com.example.weather.presentations.intro
 
 import android.Manifest
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.health.connect.datatypes.ExerciseRoute
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
@@ -19,6 +22,9 @@ import com.denzcoskun.imageslider.models.SlideModel
 
 import com.example.weather.R
 import com.example.weather.common.Location.LocationService
+import com.example.weather.common.Tools.flag
+import com.example.weather.common.Tools.latitude
+import com.example.weather.common.Tools.longitude
 import com.example.weather.databinding.ActivityIntroBinding
 
 class intro : AppCompatActivity() {
@@ -28,8 +34,18 @@ class intro : AppCompatActivity() {
             ctx.startActivity(intent)
         }
     }
-
     lateinit var binding: ActivityIntroBinding
+    private val locationReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val latitude = intent?.getDoubleExtra("latitude", 0.0)
+            val longitude = intent?.getDoubleExtra("longitude", 0.0)
+
+            // Now you can use the latitude and longitude values in your activity
+            binding.country.hint="lat:$latitude \n long:$longitude"
+        }
+    }
+
+
 
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,8 +66,14 @@ class intro : AppCompatActivity() {
                .apply {
                    action= LocationService.ACTION_START
                    startForegroundService(this)}
+        // Register the BroadcastReceiver
+        val intentFilter = IntentFilter("LOCATION_UPDATE")
+        registerReceiver(locationReceiver, intentFilter, RECEIVER_NOT_EXPORTED)
 
-
+//        Toast.makeText(this,"location :($latitude,$longitude)",Toast.LENGTH_LONG).show()
+//        if(flag)
+//        {
+//       binding.country.hint="lat:$latitude \n long:$longitude"}
 
 
 //        isLocationPermissionGranted(this)
