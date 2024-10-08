@@ -57,12 +57,12 @@ class LocationService: Service() {
           this,"weather"
       )
           .setContentTitle("Tracking Location ....")
-          .setContentText("Location:null")
+          .setContentText("Loading...")
           .setSmallIcon(R.drawable.stat_notify_sync)
           .setOngoing(true)
 val notificationManager=getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
       //to show updating event in notification
-      locationclient.getLocationUpdate(10000L)
+      locationclient.getLocationUpdate(100L)
           .catch { e->e.printStackTrace() }
           .onEach { location->
               val lat=location.latitude.toString().takeLast(3)
@@ -71,7 +71,7 @@ val notificationManager=getSystemService(Context.NOTIFICATION_SERVICE) as Notifi
               notificationManager.notify(1,updateNotification.build())
           }
           .launchIn(serviceScope)
-      startForeground(1,notification.build(), ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION)
+      startForeground(1,notification.build(), FOREGROUND_SERVICE_TYPE_LOCATION)
   }
     private fun stop()
     {

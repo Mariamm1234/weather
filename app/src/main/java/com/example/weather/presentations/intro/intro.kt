@@ -34,24 +34,23 @@ class intro : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         ActivityCompat.requestPermissions(
             this,
             arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.FOREGROUND_SERVICE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION
             ),0
         )
         //enableEdgeToEdge()
         binding = ActivityIntroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-       binding.goToHome.setOnClickListener{
            Intent(applicationContext, LocationService::class.java)
                .apply {
                    action= LocationService.ACTION_START
-                   startService(this)}
-       }
+                   startForegroundService(this)}
+
 
 
 
