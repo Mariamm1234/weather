@@ -22,6 +22,7 @@ import com.denzcoskun.imageslider.models.SlideModel
 
 import com.example.weather.R
 import com.example.weather.common.Location.LocationService
+import com.example.weather.common.Location.hasLocationPermission
 import com.example.weather.databinding.ActivityIntroBinding
 
 class intro : AppCompatActivity() {
@@ -58,7 +59,7 @@ class intro : AppCompatActivity() {
         //enableEdgeToEdge()
         binding = ActivityIntroBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+this.hasLocationPermission()
            Intent(applicationContext, LocationService::class.java)
                .apply {
                    action= LocationService.ACTION_START
