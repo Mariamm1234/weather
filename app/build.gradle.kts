@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id ("kotlin-kapt")
+    id ("dagger.hilt.android.plugin")
 
 }
 
@@ -76,4 +78,19 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.5.2")
     implementation("com.github.denzcoskun:ImageSlideshow:0.1.0")
     implementation("com.google.android.gms:play-services-location:21.3.0")
+    // Hilt for Dependency Injection: A library used for dependency injection in Android applications.
+    kapt ("com.google.dagger:hilt-android-compiler:2.48")
+    implementation ("com.google.dagger:hilt-android:2.52")
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.7.0")
+
+    implementation ("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.6")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
+
+    //retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation ("com.squareup.okhttp3:okhttp:4.3.1")
+    implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
+    implementation ("com.google.code.gson:gson:2.9.0")
 }

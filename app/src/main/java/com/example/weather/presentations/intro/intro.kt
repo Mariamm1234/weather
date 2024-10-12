@@ -1,6 +1,7 @@
 package com.example.weather.presentations.intro
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -24,6 +25,7 @@ import com.example.weather.R
 import com.example.weather.common.Location.LocationService
 import com.example.weather.common.Location.hasLocationPermission
 import com.example.weather.databinding.ActivityIntroBinding
+import com.example.weather.network.Connections.servicesRepo
 
 class intro : AppCompatActivity() {
     companion object {
@@ -32,12 +34,16 @@ class intro : AppCompatActivity() {
             ctx.startActivity(intent)
         }
     }
+    lateinit var repo: servicesRepo
     lateinit var binding: ActivityIntroBinding
+     var lat: Double=0.0
+    var lon: Double=0.0
     private val locationReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val latitude = intent?.getDoubleExtra("latitude", 0.0)
             val longitude = intent?.getDoubleExtra("longitude", 0.0)
-
+lon= longitude!!
+            lat= latitude!!
             // Now you can use the latitude and longitude values in your activity
             binding.country.hint="lat:$latitude \n long:$longitude"
         }
@@ -45,6 +51,7 @@ class intro : AppCompatActivity() {
 
 
 
+    @SuppressLint("SuspiciousIndentation")
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +66,9 @@ class intro : AppCompatActivity() {
         //enableEdgeToEdge()
         binding = ActivityIntroBinding.inflate(layoutInflater)
         setContentView(binding.root)
-this.hasLocationPermission()
+        repo= servicesRepo
+        repo.ctx=this
+//this.hasLocationPermission()
            Intent(applicationContext, LocationService::class.java)
                .apply {
                    action= LocationService.ACTION_START
@@ -67,6 +76,12 @@ this.hasLocationPermission()
         // Register the BroadcastReceiver
         val intentFilter = IntentFilter("LOCATION_UPDATE")
         registerReceiver(locationReceiver, intentFilter, RECEIVER_NOT_EXPORTED)
+        binding.goToHome.setOnClickListener{
+var l=repo.getDailyForecast(lon,lat, lang = "en",this)
+            if(l.value!=null)
+                Toast.makeText(this,"done",Toast.LENGTH_LONG).show()
+
+        }
 
 //        Toast.makeText(this,"location :($latitude,$longitude)",Toast.LENGTH_LONG).show()
 //        if(flag)

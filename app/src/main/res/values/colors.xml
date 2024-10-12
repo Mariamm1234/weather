@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#F3F4F8</color>
+    <color name="sky">#89CFF0</color>
+    <color name="Vorange">#EF8C1A</color>
 </resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="dd" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/sky</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="windowMinWidthMajor">88%</item>
+        <item name="windowMinWidthMinor">88%</item>
+        <item name="android:windowMinWidthMajor">88%</item>
+        <item name="android:windowMinWidthMinor">88%</item>
+    </style>
+
+</resources>
