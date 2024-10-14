@@ -17,7 +17,7 @@ object Source {
         if(retrofit==null)
         {
             retrofit= Retrofit.Builder()
-                .baseUrl("https://api.openweathermap.org/data/2.5/")
+                .baseUrl("https://api.openweathermap.org/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
         }

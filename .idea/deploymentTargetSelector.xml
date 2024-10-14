@@ -7,7 +7,7 @@
       </SelectionState>
       <SelectionState runConfigName="splash">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-10-10T16:03:15.007620700Z">
+        <DropdownSelection timestamp="2024-10-12T17:33:49.013470Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\dell\.android\avd\Pixel_8a_API_31.avd" />

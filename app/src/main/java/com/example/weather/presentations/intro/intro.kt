@@ -77,9 +77,11 @@ lon= longitude!!
         val intentFilter = IntentFilter("LOCATION_UPDATE")
         registerReceiver(locationReceiver, intentFilter, RECEIVER_NOT_EXPORTED)
         binding.goToHome.setOnClickListener{
-var l=repo.getDailyForecast(lon,lat, lang = "en",this)
+var l=repo.getCurrentWeather(lon,lat, lang = "en",this)
+//            var l=repo.getCountryGeometric("Cairo",this)
             if(l.value!=null)
-                Toast.makeText(this,"done",Toast.LENGTH_LONG).show()
+//                Toast.makeText(this,"done",Toast.LENGTH_LONG).show()
+                Log.i("result", l.value.toString())
 
         }
 

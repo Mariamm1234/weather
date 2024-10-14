@@ -10,6 +10,7 @@ import com.example.weather.common.Tools
 import com.example.weather.common.Tools.createGeneralDialog
 import com.example.weather.network.Models.forecastDaily.forecastDaily
 import com.example.weather.network.Models.forecastData.forecastZone
+import com.example.weather.network.Models.geoData.geoDataItem
 
 import com.example.weather.network.Models.weatherData.weatherZone
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -24,6 +25,7 @@ lateinit var ctx :Context
 var resApi1 =MutableLiveData<weatherZone>()
 var resApi2 =MutableLiveData<forecastZone>()
 var resApi3 =MutableLiveData<forecastDaily>()
+    var resApi4 =MutableLiveData<List<geoDataItem>>()
 private  fun begin()
 {
     Tools.Start(ctx)
@@ -162,4 +164,41 @@ return resApi1
         return  resApi3
     }
 
+    fun getCountryGeometric(
+        cityName:String,
+        ctx: Context
+    ): MutableLiveData<List<geoDataItem>>{
+        begin()
+        API.getClient().getCountryGeometric(cityName=cityName).enqueue(object : Callback<List<geoDataItem>>{
+            override fun onResponse(
+                call: Call<List<geoDataItem>>,
+                response: Response<List<geoDataItem>>
+            ) {
+                if(response.code()==200)
+                {
+                    end()
+                    resApi4.value= response.body() as List<geoDataItem>
+                }
+                Log.i("getCountryGeometrics",response.body().toString())
+            }
+
+            override fun onFailure(
+                call: Call<List<geoDataItem>>,
+                t: Throwable
+            ) {
+                createGeneralDialog(
+                    ctx,
+                    "Problem!!",
+                    "There's something went wrong",
+                    "Try again",
+                    "Cancel"
+                ) {
+                    getCountryGeometric(cityName,ctx)
+                }
+            }
+
+
+        })
+        return resApi4
+    }
 }
