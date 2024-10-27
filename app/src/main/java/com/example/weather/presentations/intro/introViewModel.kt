@@ -6,10 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.weather.common.constants.Resource
 import com.example.weather.common.state
 import com.example.weather.data.remote.dto.weatherData.weather
+import com.example.weather.data.reposatory.apiRepiImpl
 import com.example.weather.domain.reposatories.apiRepo
 import com.example.weather.domain.usecases.GetWeatherData
 import com.example.weather.network.Models.weatherData.weatherZone
@@ -24,23 +26,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class introViewModel @Inject constructor(
-    private val getWeatherDataUsecase: GetWeatherData
-): ViewModel() {
-//    private val _state= MutableLiveData<Resource<weatherZone>>()
-//    val state: LiveData<Resource<weatherZone>> =_state
-private val _state = MutableStateFlow<Resource<weatherZone>>(Resource.Loading())
-    val state: StateFlow<Resource<weatherZone>> = _state
+   val getWeatherDataUsecase: GetWeatherData
+) : ViewModel() {
 
-   fun getWeatherData(lon: Double,lat: Double,lang: String){
-       var res: weatherZone
-     viewModelScope.launch(Dispatchers.IO)
-     {
-       getWeatherDataUsecase(lon,lat,lang).collect{
-           result->
-           _state.value=result
-       }
+    private val _state = MutableStateFlow<Resource<weatherZone>>(Resource.Loading())
+    val state: StateFlow<Resource<weatherZone>> get() = _state
 
-//      return@launch
+    fun getWeatherData(lon: Double, lat: Double, lang: String) {
+        viewModelScope.launch {
+            getWeatherDataUsecase(lon, lat, lang).collect { result ->
+                _state.value = result
+            }
+        }
     }
- }
 }

@@ -59,8 +59,7 @@ lon= longitude!!
         }
     }
 
-// var view: introViewModel by viewModels()
-private val view: introViewModel by viewModels<introViewModel>()
+    private val viewModel: introViewModel by viewModels()
 
     @SuppressLint("SuspiciousIndentation")
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
@@ -72,20 +71,21 @@ private val view: introViewModel by viewModels<introViewModel>()
             arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
-            ),0
+            ), 0
         )
         //enableEdgeToEdge()
 
         binding = ActivityIntroBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        repo= servicesRepo
-        repo.ctx=this
+        repo = servicesRepo
+        repo.ctx = this
 
 //this.hasLocationPermission()
-           Intent(applicationContext, LocationService::class.java)
-               .apply {
-                   action= LocationService.ACTION_START
-                   startForegroundService(this)}
+        Intent(applicationContext, LocationService::class.java)
+            .apply {
+                action = LocationService.ACTION_START
+                startForegroundService(this)
+            }
         // Register the BroadcastReceiver
         val intentFilter = IntentFilter("LOCATION_UPDATE")
         registerReceiver(locationReceiver, intentFilter, RECEIVER_NOT_EXPORTED)
@@ -108,32 +108,32 @@ private val view: introViewModel by viewModels<introViewModel>()
 //
 //            }}
 
-      //  **********************************************************************
+        //  **********************************************************************
 //     viewModel.state.observe(this){
 //
 //     }
-        binding.goToHome.setOnClickListener{
+//        binding.goToHome.setOnClickListener{
+////            view.getWeatherData(7.367,45.133,"en")
+//
 //            view.getWeatherData(7.367,45.133,"en")
-
-            view.getWeatherData(7.367,45.133,"en")
-            lifecycleScope.launch{
-                repeatOnLifecycle(Lifecycle.State.STARTED){
-                    view.state.collect{
-                        state->
-                        when(state)
-                        {
-                            is Resource.Error -> Toast.makeText(this@intro,"something went wrong",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            is Resource.Loading -> Start(this@intro)
-                            is Resource.Success -> Toast.makeText(this@intro,"Perfect",
-                                Toast.LENGTH_LONG
-                            ).show()
-                           //send data?
-                        }
-                    }
-                }
-            }
+//            lifecycleScope.launch{
+//                repeatOnLifecycle(Lifecycle.State.STARTED){
+//                    view.state.collect{
+//                        state->
+//                        when(state)
+//                        {
+//                            is Resource.Error -> Toast.makeText(this@intro,"something went wrong",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+//                            is Resource.Loading -> Start(this@intro)
+//                            is Resource.Success -> Toast.makeText(this@intro,"Perfect",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+//                           //send data?
+//                        }
+//                    }
+//                }
+//            }
 //                    lifecycleScope.launchWhenStarted {
 //            view.state.collect{
 //                    result->
@@ -152,6 +152,42 @@ private val view: introViewModel by viewModels<introViewModel>()
 //                }
 //
 //            }}
+
+
+viewModel.getWeatherData(lon = 7.367, lat = 45.133, lang = "en")
+        // Observing state from the ViewModel
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect { state ->
+                    when (state) {
+                        is Resource.Loading -> {
+                            // Show loading UI
+                        }
+                        is Resource.Error -> {
+                            // Show error message
+                            Toast.makeText(this@intro, state.message, Toast.LENGTH_LONG).show()
+                        }
+                        is Resource.Success -> {
+                            // Update UI with weather data
+                            binding.goToHome.setOnClickListener{
+                                val weatherData = state.data
+                                Log.i("result",weatherData.toString())
+                            }
+
+                            // Use `weatherData` in your views
+                        }
+                    }
+                }
+            }
+        }
+
+        // Trigger weather data fetch on button click
+//        binding.goToHome.setOnClickListener {
+//            viewModel.getWeatherData(lon = 7.367, lat = 45.133, lang = "en")
+//        }
+
+
+    }
           }
 //var l=repo.getCurrentWeather(lon,lat, lang = "en",this)
 //            var l=repo.getCountryGeometric("Cairo",this)
@@ -175,7 +211,7 @@ private val view: introViewModel by viewModels<introViewModel>()
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
 //            insets
 //        }
-    }}
+
 
 
 //    fun showSlider()

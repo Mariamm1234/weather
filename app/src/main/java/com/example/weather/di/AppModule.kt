@@ -72,10 +72,15 @@ class AppModule {
     {
         return apiRepiImpl(api)
     }
-
     @Singleton
     @Provides
-    fun provideUseCase(usecase: GetWeatherData): GetWeatherData {
-        return usecase
+    fun provideRepo(repo: apiRepiImpl):apiRepo{
+        return repo
     }
+
+//    @Singleton
+//    @Provides
+//    fun provideUseCase(api: apiRepo): GetWeatherData {
+//        return GetWeatherData(api)
+//    }
 }
