@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.flow
 import okio.IOException
 import retrofit2.HttpException
 import javax.inject.Inject
+import javax.inject.Singleton
 
 class GetWeatherData @Inject constructor(
     val repo: apiRepo

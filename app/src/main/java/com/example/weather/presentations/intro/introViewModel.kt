@@ -24,14 +24,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class introViewModel @Inject constructor(
-    private val getWeatherDataUsecase: GetWeatherData,
-
+    private val getWeatherDataUsecase: GetWeatherData
 ): ViewModel() {
 //    private val _state= MutableLiveData<Resource<weatherZone>>()
 //    val state: LiveData<Resource<weatherZone>> =_state
-companion object{
-
-}
 private val _state = MutableStateFlow<Resource<weatherZone>>(Resource.Loading())
     val state: StateFlow<Resource<weatherZone>> = _state
 

@@ -60,7 +60,7 @@ lon= longitude!!
     }
 
 // var view: introViewModel by viewModels()
-private val view: introViewModel by viewModels()
+private val view: introViewModel by viewModels<introViewModel>()
 
     @SuppressLint("SuspiciousIndentation")
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
