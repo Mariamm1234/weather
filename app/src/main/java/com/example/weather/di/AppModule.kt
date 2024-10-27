@@ -2,6 +2,10 @@ package com.example.weather.di
 
 import android.content.Context
 import com.example.weather.common.Location.weatherApp
+import com.example.weather.data.remote.dto.API2
+import com.example.weather.data.reposatory.apiRepiImpl
+import com.example.weather.domain.reposatories.apiRepo
+import com.example.weather.domain.usecases.GetWeatherData
 import com.example.weather.network.Connections.ApiServices
 import dagger.Module
 import dagger.Provides
@@ -60,5 +64,18 @@ class AppModule {
         val httpLoggingInterceptor= HttpLoggingInterceptor()
         httpLoggingInterceptor.level= HttpLoggingInterceptor.Level.BODY
         return httpLoggingInterceptor
+    }
+
+    @Singleton
+    @Provides
+    fun provideApiRepo(api: API2):apiRepo
+    {
+        return apiRepiImpl(api)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUseCase(usecase: GetWeatherData): GetWeatherData {
+        return usecase
     }
 }

@@ -101,8 +101,7 @@ lateinit var alert: AlertDialog
             detailMesaage:String,
             tryAgain:String,
             cancel: String,
-            action:()->Unit
-        ){
+            action:()->Unit        ){
             //dialog obj with custom background
             val alertObj= AlertDialog.Builder(ctx)
             //display the dialog as view obj can display on screen

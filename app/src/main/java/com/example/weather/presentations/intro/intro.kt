@@ -14,19 +14,29 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.denzcoskun.imageslider.models.SlideModel
 
 import com.example.weather.R
 import com.example.weather.common.Location.LocationService
 import com.example.weather.common.Location.hasLocationPermission
+import com.example.weather.common.Tools.Start
+import com.example.weather.common.constants.Resource
 import com.example.weather.databinding.ActivityIntroBinding
 import com.example.weather.network.Connections.servicesRepo
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class intro : AppCompatActivity() {
     companion object {
         fun open(ctx: Context) {
@@ -49,7 +59,8 @@ lon= longitude!!
         }
     }
 
-
+// var view: introViewModel by viewModels()
+private val view: introViewModel by viewModels()
 
     @SuppressLint("SuspiciousIndentation")
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
@@ -64,10 +75,12 @@ lon= longitude!!
             ),0
         )
         //enableEdgeToEdge()
+
         binding = ActivityIntroBinding.inflate(layoutInflater)
         setContentView(binding.root)
         repo= servicesRepo
         repo.ctx=this
+
 //this.hasLocationPermission()
            Intent(applicationContext, LocationService::class.java)
                .apply {
@@ -76,14 +89,77 @@ lon= longitude!!
         // Register the BroadcastReceiver
         val intentFilter = IntentFilter("LOCATION_UPDATE")
         registerReceiver(locationReceiver, intentFilter, RECEIVER_NOT_EXPORTED)
-        binding.goToHome.setOnClickListener{
-var l=repo.getCurrentWeather(lon,lat, lang = "en",this)
-//            var l=repo.getCountryGeometric("Cairo",this)
-            if(l.value!=null)
-//                Toast.makeText(this,"done",Toast.LENGTH_LONG).show()
-                Log.i("result", l.value.toString())
+//        lifecycleScope.launchWhenStarted {
+//            viewModel.state.collect{
+//                    result->
+//                when(result)
+//                {
+//                    is Resource.Error -> {
+//                        result.message ="this error message"
+//                    }
+//                    is Resource.Loading -> {
+//                        Start(this as Context)
+//                    }
+//                    is Resource.Success -> {
+//                        var data=result.data
+//                        Log.i("result", data.toString())
+//                    }
+//                }
+//
+//            }}
 
-        }
+      //  **********************************************************************
+//     viewModel.state.observe(this){
+//
+//     }
+        binding.goToHome.setOnClickListener{
+//            view.getWeatherData(7.367,45.133,"en")
+
+            view.getWeatherData(7.367,45.133,"en")
+            lifecycleScope.launch{
+                repeatOnLifecycle(Lifecycle.State.STARTED){
+                    view.state.collect{
+                        state->
+                        when(state)
+                        {
+                            is Resource.Error -> Toast.makeText(this@intro,"something went wrong",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            is Resource.Loading -> Start(this@intro)
+                            is Resource.Success -> Toast.makeText(this@intro,"Perfect",
+                                Toast.LENGTH_LONG
+                            ).show()
+                           //send data?
+                        }
+                    }
+                }
+            }
+//                    lifecycleScope.launchWhenStarted {
+//            view.state.collect{
+//                    result->
+//                when(result)
+//                {
+//                    is Resource.Error -> {
+//                        result.message ="this error message"
+//                    }
+//                    is Resource.Loading -> {
+//                        Start(this as Context)
+//                    }
+//                    is Resource.Success -> {
+//                        var data=result.data
+//                        Log.i("result", data.toString())
+//                    }
+//                }
+//
+//            }}
+          }
+//var l=repo.getCurrentWeather(lon,lat, lang = "en",this)
+//            var l=repo.getCountryGeometric("Cairo",this)
+//            if(l!=null)
+//                Toast.makeText(this,"done",Toast.LENGTH_LONG).show()
+//                Log.i("result", l.toString())
+
+
 
 //        Toast.makeText(this,"location :($latitude,$longitude)",Toast.LENGTH_LONG).show()
 //        if(flag)
@@ -99,7 +175,7 @@ var l=repo.getCurrentWeather(lon,lat, lang = "en",this)
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
 //            insets
 //        }
-    }
+    }}
 
 
 //    fun showSlider()
@@ -136,4 +212,4 @@ var l=repo.getCurrentWeather(lon,lat, lang = "en",this)
 
 
 
-}
+
