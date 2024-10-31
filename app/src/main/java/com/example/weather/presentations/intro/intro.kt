@@ -44,6 +44,8 @@ class intro : AppCompatActivity() {
             ctx.startActivity(intent)
         }
     }
+
+
     lateinit var repo: servicesRepo
     lateinit var binding: ActivityIntroBinding
      var lat: Double=0.0
@@ -153,25 +155,26 @@ lon= longitude!!
 //
 //            }}
 
+        binding.goToHome.setOnClickListener{
 
-viewModel.getWeatherData(lon = 7.367, lat = 45.133, lang = "en")
-        // Observing state from the ViewModel
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect { state ->
-                    when (state) {
-                        is Resource.Loading -> {
-                            // Show loading UI
-                        }
-                        is Resource.Error -> {
-                            // Show error message
-                            Toast.makeText(this@intro, state.message, Toast.LENGTH_LONG).show()
-                        }
-                        is Resource.Success -> {
-                            // Update UI with weather data
-                            binding.goToHome.setOnClickListener{
-                                val weatherData = state.data
-                                Log.i("result",weatherData.toString())
+            viewModel.getWeatherData(lon = 7.367, lat = 45.133, lang = "en")
+            // Observing state from the ViewModel
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.state.collect { state ->
+                        when (state) {
+                            is Resource.Loading -> {
+                                // Show loading UI
+                            }
+                            is Resource.Error -> {
+                                // Show error message
+                                Toast.makeText(this@intro, state.message, Toast.LENGTH_LONG).show()
+                            }
+                            is Resource.Success -> {
+                                // Update UI with weather data
+//                            binding.goToHome.setOnClickListener{
+//                                val weatherData = state.data
+//                                Log.i("result",weatherData.toString())
                             }
 
                             // Use `weatherData` in your views
@@ -179,6 +182,35 @@ viewModel.getWeatherData(lon = 7.367, lat = 45.133, lang = "en")
                     }
                 }
             }
+
+
+        }
+
+//viewModel.getWeatherData(lon = 7.367, lat = 45.133, lang = "en")
+//        // Observing state from the ViewModel
+//        lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                viewModel.state.collect { state ->
+//                    when (state) {
+//                        is Resource.Loading -> {
+//                            // Show loading UI
+//                        }
+//                        is Resource.Error -> {
+//                            // Show error message
+//                            Toast.makeText(this@intro, state.message, Toast.LENGTH_LONG).show()
+//                        }
+//                        is Resource.Success -> {
+//                            // Update UI with weather data
+////                            binding.goToHome.setOnClickListener{
+////                                val weatherData = state.data
+////                                Log.i("result",weatherData.toString())
+//                            }
+//
+//                            // Use `weatherData` in your views
+//                        }
+//                    }
+//                }
+//            }
         }
 
         // Trigger weather data fetch on button click
@@ -188,7 +220,7 @@ viewModel.getWeatherData(lon = 7.367, lat = 45.133, lang = "en")
 
 
     }
-          }
+
 //var l=repo.getCurrentWeather(lon,lat, lang = "en",this)
 //            var l=repo.getCountryGeometric("Cairo",this)
 //            if(l!=null)
