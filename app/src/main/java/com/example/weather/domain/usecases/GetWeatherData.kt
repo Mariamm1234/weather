@@ -18,7 +18,7 @@ class GetWeatherData @Inject constructor(
     operator fun invoke(lon: Double,lat: Double,lang: String): Flow<Resource<weatherZone>> = flow {
         try {
             emit(Resource.Loading())
-            val weather=repo.getWeatherData(lon,lat,lang)
+            val weather=repo.getWeatherData(lon,lat,lang).value!!
             emit(Resource.Success(weather))
 
         }

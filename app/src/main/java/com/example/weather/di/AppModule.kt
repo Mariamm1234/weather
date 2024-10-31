@@ -68,19 +68,19 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideApiRepo(api: API2):apiRepo
+    fun provideApiRepo(retrofit: Retrofit): API2
     {
-        return apiRepiImpl(api)
+        return retrofit.create(API2::class.java)
     }
-    @Singleton
-    @Provides
-    fun provideRepo(repo: apiRepiImpl):apiRepo{
-        return repo
-    }
-
 //    @Singleton
 //    @Provides
-//    fun provideUseCase(api: apiRepo): GetWeatherData {
-//        return GetWeatherData(api)
+//    fun provideRepo(repo: apiRepiImpl):apiRepo{
+//        return repo
 //    }
+
+    @Singleton
+    @Provides
+    fun provideUseCase(api: apiRepo): GetWeatherData {
+        return GetWeatherData(api)
+    }
 }

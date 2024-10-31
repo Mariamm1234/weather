@@ -19,7 +19,7 @@ interface API2 {
         @Query("lat") lat: Double,
         @Query("lang") lang: String,
         @Query("appid") apiKey: String=api
-    ): weatherZone
+    ): Call< weatherZone>
 
     @GET("data/2.5/forecast")
     fun getForecastFiveDayData(
