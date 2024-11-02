@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id ("kotlin-kapt")
     id ("dagger.hilt.android.plugin")
-
 }
 
 android {
@@ -79,7 +78,7 @@ dependencies {
     implementation("com.github.denzcoskun:ImageSlideshow:0.1.0")
     implementation("com.google.android.gms:play-services-location:21.3.0")
     // Hilt for Dependency Injection: A library used for dependency injection in Android applications.
-    kapt ("com.google.dagger:hilt-android-compiler:2.48")
+    kapt ("com.google.dagger:hilt-android-compiler:2.52")
     implementation ("com.google.dagger:hilt-android:2.52")
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.7.0")
 
