@@ -1,8 +1,10 @@
 package com.example.weather.di
 
+import android.app.Application
 import android.content.Context
 import com.example.weather.common.Location.weatherApp
 import com.example.weather.data.remote.dto.API2
+import com.example.weather.data.reposatory.api2Rep
 import com.example.weather.data.reposatory.apiRepiImpl
 import com.example.weather.domain.reposatories.apiRepo
 import com.example.weather.domain.usecases.GetWeatherData
@@ -21,6 +23,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
+
+    @Provides
+    @Singleton
+    fun provideContext(app: Application) = app.applicationContext
+
     @Singleton
     @Provides
     fun provideApplication(@ApplicationContext app:Context):weatherApp{
@@ -72,11 +79,13 @@ class AppModule {
     {
         return retrofit.create(API2::class.java)
     }
-//    @Singleton
-//    @Provides
-//    fun provideRepo(repo: apiRepiImpl):apiRepo{
-//        return repo
-//    }
+
+    @Provides
+    fun provideRepo(app: Context): api2Rep {
+        val obj = api2Rep
+        obj.ctx = app
+        return obj
+    }
 
     @Singleton
     @Provides
