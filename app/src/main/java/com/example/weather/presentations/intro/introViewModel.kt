@@ -2,6 +2,7 @@ package com.example.weather.presentations.intro
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +15,9 @@ import com.example.weather.common.state
 import com.example.weather.data.remote.dto.weatherData.weather
 import com.example.weather.data.reposatory.apiRepiImpl
 import com.example.weather.domain.reposatories.apiRepo
+import com.example.weather.domain.usecases.GetGeometrics
 import com.example.weather.domain.usecases.GetWeatherData
+import com.example.weather.network.Models.geoData.geoDataItem
 import com.example.weather.network.Models.weatherData.weatherZone
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -27,16 +30,31 @@ import javax.inject.Inject
 
 @HiltViewModel
 class introViewModel @Inject constructor(
-   val getWeatherDataUsecase: GetWeatherData
+//   val getWeatherDataUsecase: GetWeatherData,
+    val getGeometricsUsecase: GetGeometrics
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<Resource<weatherZone>>(Resource.Loading())
-    val state: StateFlow<Resource<weatherZone>> get() = _state
+//    private val _state = MutableStateFlow<Resource<weatherZone>>(Resource.Loading())
+//    val state: StateFlow<Resource<weatherZone>> get() = _state
 
-    fun getWeatherData(lon: Double, lat: Double, lang: String) {
-        viewModelScope.launch {
-            getWeatherDataUsecase(lon, lat, lang).collect { result ->
-                _state.value = result
+    private val _geoState = MutableStateFlow<Resource<List<geoDataItem>>>(Resource.Loading())
+    val geoState: StateFlow<Resource<List<geoDataItem>>> get() =_geoState
+
+//    fun getWeatherData(lon: Double, lat: Double, lang: String,ctx: Context) {
+//        viewModelScope.launch {
+//            getWeatherDataUsecase(lon, lat, lang,ctx).collect { result ->
+//                Log.i("state", result.data.toString())
+//
+//                _state.value = result
+//            }
+//        }
+//    }
+
+    fun getGeoData(cityName:String,ctx:Context){
+        viewModelScope.launch{
+            getGeometricsUsecase(cityName,ctx).collect{
+                result->
+                _geoState.value=result
             }
         }
     }

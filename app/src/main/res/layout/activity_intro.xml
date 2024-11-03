@@ -81,7 +81,8 @@
        android:layout_marginTop="@dimen/spacing_mxlarge"
        />
     <EditText
-        android:id="@+id/country"
+
+        android:id="@+id/country_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="@dimen/spacing_large"
@@ -92,6 +93,22 @@
         android:paddingHorizontal="@dimen/spacing_mxlarge"
         />
     <Button
+        android:visibility="gone"
+        android:id="@+id/country"
+        android:layout_marginHorizontal="@dimen/spacing_smlarge"
+        android:layout_marginTop="@dimen/spacing_mxlarge"
+        android:layout_width="wrap_content"
+        android:background="@drawable/continue_button"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Country"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:padding="@dimen/spacing_large"
+        />
+    <Button
+
         android:id="@+id/go_to_home"
         android:layout_marginHorizontal="@dimen/spacing_smlarge"
         android:layout_marginTop="@dimen/spacing_mxlarge"

@@ -31,8 +31,10 @@ import com.example.weather.common.Location.LocationService
 import com.example.weather.common.Location.hasLocationPermission
 import com.example.weather.common.Tools.Start
 import com.example.weather.common.constants.Resource
+import com.example.weather.data.reposatory.api2Rep
 import com.example.weather.databinding.ActivityIntroBinding
 import com.example.weather.network.Connections.servicesRepo
+import com.example.weather.presentations.home.home
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -46,7 +48,7 @@ class intro : AppCompatActivity() {
     }
 
 
-    lateinit var repo: servicesRepo
+    lateinit var repo: api2Rep
     lateinit var binding: ActivityIntroBinding
      var lat: Double=0.0
     var lon: Double=0.0
@@ -79,7 +81,7 @@ lon= longitude!!
 
         binding = ActivityIntroBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        repo = servicesRepo
+        repo = api2Rep
         repo.ctx = this
 
 //this.hasLocationPermission()
@@ -154,14 +156,27 @@ lon= longitude!!
 //                }
 //
 //            }}
-
+//        var l=repo.getCurrentWeather(lon,lat, lang = "en",this)
+////            var l=repo.getCountryGeometric("Cairo",this)
+//        if(l!=null)
+//            Toast.makeText(this,"done",Toast.LENGTH_LONG).show()
+//        Log.i("result", l.value.toString())
+//binding.country.setOnClickListener{
+//
+//}
         binding.goToHome.setOnClickListener{
+/**/
+//           viewModel.getWeatherData(lon = lon, lat = lat, lang = "en",this@intro)
 
-            viewModel.getWeatherData(lon = 7.367, lat = 45.133, lang = "en")
+            viewModel.getGeoData(
+                binding.countryText.text.toString(),
+                this@intro
+
+            )
             // Observing state from the ViewModel
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    viewModel.state.collect { state ->
+                    viewModel.geoState.collect { state ->
                         when (state) {
                             is Resource.Loading -> {
                                 // Show loading UI
@@ -169,12 +184,18 @@ lon= longitude!!
                             is Resource.Error -> {
                                 // Show error message
                                 Toast.makeText(this@intro, state.message, Toast.LENGTH_LONG).show()
+                                binding.goToHome.text="try again"
+//                                viewModel.getWeatherData(lon = lon, lat = lat, lang = "en",this@intro)
                             }
                             is Resource.Success -> {
                                 // Update UI with weather data
 //                            binding.goToHome.setOnClickListener{
 //                                val weatherData = state.data
-//                                Log.i("result",weatherData.toString())
+//                                Log.i("result",weatherData.toString())}
+                                binding.goToHome.text="continue"
+                                val country=state.data
+                                home.open(this@intro)
+                                Log.i("result from vm", country?.get(0)?.lat.toString())
                             }
 
                             // Use `weatherData` in your views
