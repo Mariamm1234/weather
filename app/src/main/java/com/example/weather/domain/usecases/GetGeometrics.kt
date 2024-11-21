@@ -4,8 +4,10 @@ import android.content.Context
 import com.example.weather.common.constants.Resource
 import com.example.weather.domain.reposatories.apiRepo
 import com.example.weather.network.Models.geoData.geoDataItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -30,5 +32,5 @@ class GetGeometrics @Inject constructor(
         catch (e: IOException) {
             emit(Resource.Error("Server needs to refresh"))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 }

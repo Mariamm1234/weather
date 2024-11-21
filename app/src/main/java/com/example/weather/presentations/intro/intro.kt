@@ -36,6 +36,7 @@ import com.example.weather.databinding.ActivityIntroBinding
 import com.example.weather.network.Connections.servicesRepo
 import com.example.weather.presentations.home.home
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -183,7 +184,7 @@ lon= longitude!!
                             }
                             is Resource.Error -> {
                                 // Show error message
-                                Toast.makeText(this@intro, state.message, Toast.LENGTH_LONG).show()
+                             //   Toast.makeText(this@intro, state.message, Toast.LENGTH_LONG).show()
                                 binding.goToHome.text="try again"
 //                                viewModel.getWeatherData(lon = lon, lat = lat, lang = "en",this@intro)
                             }
@@ -194,13 +195,19 @@ lon= longitude!!
 //                                Log.i("result",weatherData.toString())}
                                 binding.goToHome.text="continue"
                                 val country=state.data
-                                home.open(this@intro)
+
                                 Log.i("result from vm", country?.get(0)?.lat.toString())
+                                home.setData(doubleArrayOf(
+                                    country?.get(0)?.lon!!,
+                                    country[0].lat!!
+                                ))
+                                home.open(this@intro)
                             }
 
                             // Use `weatherData` in your views
                         }
                     }
+
                 }
             }
 

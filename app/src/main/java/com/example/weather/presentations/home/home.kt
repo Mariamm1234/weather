@@ -14,12 +14,27 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weather.databinding.ActivityHomeBinding
 import com.example.weather.R
+import com.example.weather.presentations.home.ui.home.HomeFragment
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
 class home : AppCompatActivity() {
     companion object {
+       var dat= Bundle()
         fun open(ctx: Context) {
             val intent = Intent(ctx, home::class.java)
             ctx.startActivity(intent)
         }
+        fun setData(Dat: DoubleArray)
+        {
+
+            dat.putDoubleArray("LatvsLong",Dat)
+        }
+        fun getData(): DoubleArray? {
+            return dat.getDoubleArray("LatvsLong")
+        }
+
+
     }
     private lateinit var appBarConfiguration: AppBarConfiguration
 private lateinit var binding: ActivityHomeBinding
@@ -46,6 +61,16 @@ private lateinit var binding: ActivityHomeBinding
             R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+//        navView.setNavigationItemSelectedListener{ item ->
+//            when(item.itemId)
+//            {
+//R.id.nav_home->{
+//
+//    true
+//}
+//                else -> false
+//            }
+//        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
