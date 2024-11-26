@@ -35,6 +35,7 @@ import com.example.weather.data.reposatory.api2Rep
 import com.example.weather.databinding.ActivityIntroBinding
 import com.example.weather.network.Connections.servicesRepo
 import com.example.weather.presentations.home.home
+import com.example.weather.presentations.home.ui.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -168,7 +169,7 @@ lon= longitude!!
         binding.goToHome.setOnClickListener{
 /**/
 //           viewModel.getWeatherData(lon = lon, lat = lat, lang = "en",this@intro)
-
+//val vm: HomeViewModel by viewModels()
             viewModel.getGeoData(
                 binding.countryText.text.toString(),
                 this@intro
@@ -199,8 +200,11 @@ lon= longitude!!
                                 Log.i("result from vm", country?.get(0)?.lat.toString())
                                 home.setData(doubleArrayOf(
                                     country?.get(0)?.lon!!,
-                                    country[0].lat!!
+                                    country[0].lat
                                 ))
+//                                Log.i("xxxtry",vm.getWeatherData(country[0].lat,country[0].lon,"en",
+//                                    this@intro
+//                                ).toString())
                                 home.open(this@intro)
                             }
 

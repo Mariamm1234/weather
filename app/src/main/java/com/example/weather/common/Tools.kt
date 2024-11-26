@@ -30,7 +30,9 @@ import android.app.ProgressDialog
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import com.example.weather.databinding.DialogBinding
-
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 object Tools {
@@ -132,7 +134,19 @@ lateinit var alert: AlertDialog
             }
             alert.show()
         }
-
+    /*
+    *
+    *
+    * "${Calendar.getInstance().get(Calendar.DAY_OF_WEEK)},${Calendar.getInstance().get(Calendar.MONTH)} ${Calendar.getInstance().get(Calendar.DAY_OF_MONTH)} ${Calendar.getInstance().get(Calendar.HOUR)}"
+    * */
+    fun getFormattedDate(): String {
+        val date = Date() // Current date and time
+        val dateFormat = SimpleDateFormat("EEE, MMMM dd h:mm a", Locale.ENGLISH)
+        return dateFormat.format(date)
+    }
+    fun convertToCelesius(temp:Double): String{
+return (temp.minus(273.15).toString().split('.')[0])
+    }
 fun countryDialog()
 {
 

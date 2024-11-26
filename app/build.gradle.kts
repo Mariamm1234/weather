@@ -95,5 +95,8 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
     implementation ("com.google.code.gson:gson:2.9.0")
     implementation("com.google.android.material:material:1.9.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    // For control over item selection of both touch and mouse driven selection
+    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
 //    implementation(" implementation 'com.hbb20:android-country-picker:X.Y.Z")
 }

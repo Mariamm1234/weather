@@ -16,25 +16,23 @@ import javax.inject.Inject
 class GetWeatherData @Inject constructor(
     val repo: apiRepo
 ) {
-    operator fun invoke(lon: Double, lat: Double, lang: String, ctx: Context): Flow<Resource<weatherZone>> = flow {
-        try {
-            emit(Resource.Loading())
-            var weather=repo.getWeatherData(lon,lat,lang,ctx).value!!
-            Log.i("weather", weather.toString())
-            emit(Resource.Success(weather))
+    operator fun invoke(lon: Double, lat: Double, lang: String, ctx: Context): Flow<Resource<weatherZone>> =
+        flow {
+            try {
+                emit(Resource.Loading())
+                Log.i("weather", repo.getWeatherData(lon,lat,lang,ctx).value.toString())
+                var weather=repo.getWeatherData(lon,lat,lang,ctx).value
+                Log.i("weather", weather.toString())
+                emit(Resource.Success(weather))
 
-        }
-        catch (e: Exception)
-        {
-            emit(Resource.Error("Server error,please try again"))
-        }
-        catch (e: HttpException)
-        {
-            emit(Resource.Error(e.localizedMessage?:"An error in connection"))
-        }
-       catch (e: IOException) {
-            emit(Resource.Error("Server needs to refresh"))
-        }
+            } catch (e: Exception) {
+                Log.i("eccept", e.toString())
+                emit(Resource.Error("Server error,please try again"))
+            } catch (e: HttpException) {
+                emit(Resource.Error(e.localizedMessage?:"An error in connection"))
+            } catch (e: IOException) {
+                emit(Resource.Error("Server needs to refresh"))
+            }
 
-    }.flowOn(Dispatchers.IO)
+        }.flowOn(Dispatchers.IO) as Flow<Resource<weatherZone>>
 }

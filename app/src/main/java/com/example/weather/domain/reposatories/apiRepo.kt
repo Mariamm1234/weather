@@ -11,6 +11,8 @@ import retrofit2.Call
 
 //try with only these
 interface  apiRepo {
+//    suspend fun getWeatherData(lon: Double, lat: Double, lang: String,ctx:Context): weatherZone
+
     suspend fun getWeatherData(lon: Double, lat: Double, lang: String,ctx:Context): MutableLiveData<weatherZone>
     suspend fun getForecastFiveDayData( lon: Double, lat: Double, lang: String): forecastZone
     suspend fun getGeometrics(cityName:String,ctx: Context):MutableLiveData<List<geoDataItem>>
