@@ -202,6 +202,8 @@ lon= longitude!!
                                     country?.get(0)?.lon!!,
                                     country[0].lat
                                 ))
+                                //*********************************************************************NEW
+                             //   home.names.add(binding.countryText.text.toString())
 //                                Log.i("xxxtry",vm.getWeatherData(country[0].lat,country[0].lon,"en",
 //                                    this@intro
 //                                ).toString())

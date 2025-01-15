@@ -27,7 +27,7 @@ interface API2 {
         @Query("lat") lat: Double,
         @Query("lang") lang: String,
         @Query("appid") apiKey: String=api
-    ): forecastZone
+    ): Call<forecastZone>
 
     @GET("data/2.5/forecast/daily")
     fun getForecastDaily(

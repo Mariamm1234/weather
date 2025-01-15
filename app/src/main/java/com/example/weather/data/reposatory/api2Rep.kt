@@ -85,104 +85,65 @@ object api2Rep {
         })}
     }
 
-//  suspend  fun getCurrentWeather(
-//        lon: Double,
-//        lat: Double,
-//        lang:String,
-//        ctx: Context
-//    ): MutableLiveData<weatherZone>{
-////        var res= MutableLiveData<weatherZone>()
-//      runBlocking{
-//        begin()
-//        API.getClient().getWeatherData(lon=lon,lat=lat,lang=lang).enqueue(object : Callback<weatherZone>{
-//            override fun onResponse(
-//                call: Call<weatherZone>,
-//                response: Response<weatherZone>
-//            ) {
-//
-//                if(response.code()==200)
-//                {
-//                    end()
-//                    resApi1.postValue(response.body())
-//
-////                    res.value=response.body()
-//
-//                }
-//                Log.i("getWeatherDataApi",resApi1.value.toString())
-//            }
-//
-//            override fun onFailure(
-//                call: Call<weatherZone>,
-//                t: Throwable
-//            ) {
-//                createGeneralDialog(
-//                    ctx,
-//                    "Problem!!",
-//                    "There's something went wrong",
-//                    "Try again",
-//                    "Cancel"
-//                ) {
-////                    getCurrentWeather(lon, lat, lang, ctx)
-//                }
-//            }
-//
-//        }
-//
-//
-//        )}
-//        Log.i("resapi1",resApi1.value.toString())
-//        return resApi1
-//    }
+    //forecast five day api
+    suspend fun getForecastForFivedays(
 
-    //getForecastFiveDayData api
-//    fun getForecastForFiveDays(
-//        lon: Double,
-//        lat: Double,
-//        lang:String,
-//        ctx: Context
-//    ): MutableLiveData<forecastZone>{
-//        begin()
-//        API.getClient().getForecastFiveDayData(lon=lon,lat=lat,lang=lang).enqueue(object : Callback<forecastZone>{
-//            override fun onResponse(
-//                call: Call<forecastZone>,
-//                response: Response<forecastZone>
-//            ) {
-//
-//                if(response.code()==200)
-//                {
-//                    end()
-//                    resApi2.value=response.body()
-//                }
-//                Log.i("getForecastFiveDaysApi",response.body().toString())
-//            }
-//
-//            override fun onFailure(
-//                call: Call<forecastZone>,
-//                t: Throwable
-//            ) {
-//                createGeneralDialog(
-//                    ctx,
-//                    "Problem!!",
-//                    "There's something went wrong",
-//                    "Try again",
-//                    "Cancel"
-//                ) {
-//                    getForecastForFiveDays(lon, lat, lang, ctx)
-//                }
-//            }
-//
-//        })
-//        return resApi2
-//    }
+        lon: Double,
+        lat: Double,
+        lang: String,
+        ctx: Context
+    ): MutableLiveData<forecastZone> {
+        return suspendCoroutine { coro->
+            begin()
+        API.getClient().getForecastFiveDayData(lon, lat, lang)
+            .enqueue(object : Callback<forecastZone> {
+                override fun onResponse(
+                    call: Call<forecastZone>,
+                    response: Response<forecastZone>
+                ) {
+end()
+                    if (response.isSuccessful) {
+                        resApi2.postValue(response.body())
+                        coro.resume(resApi2)
+                    } else {
+                        Log.e("getWeatherDataApi", "Error code: ${response.code()}")
+//                    coro.resume(null)
+                        coro.resume(null as MutableLiveData<forecastZone>)
+                    }
+
+                }
+
+                override fun onFailure(
+                    call: Call<forecastZone>,
+                    t: Throwable
+                ) {
+                    Log.e("getWeatherDataApi", "Error: ${t.message}")
+                    createGeneralDialog(
+                        ctx,
+                        "Problem!!",
+                        "There's something went wrong",
+                        "Try again",
+                        "Cancel"
+                    ) {
+                        // Optional retry logic
+                    }
+//                coro.resume(null)
+                    coro.resumeWithException(t)
+                }
+            })
+    }
+    }
+
 
     //getForecastDaily api
-    fun getDailyForecast(
+suspend fun getDailyForecast(
         lon: Double,
         lat: Double,
         lang:String,
 //        cnt:Int,
         ctx: Context
     ): MutableLiveData<forecastDaily>{
+        return suspendCoroutine {  coro->
         begin()
         API.getClient().getForecastDaily(lon=lon,lat=lat,lang=lang).enqueue(object :
             Callback<forecastDaily>{
@@ -191,18 +152,22 @@ object api2Rep {
                 response: Response<forecastDaily>
             ) {
 
-                if(response.code()==200)
-                {
-                    end()
-                    resApi3.value=response.body()
+                end()
+                if (response.isSuccessful) {
+                    resApi3.postValue(response.body())
+                    coro.resume(resApi3)
+                } else {
+                    Log.e("getWeatherDataApi", "Error code: ${response.code()}")
+//                    coro.resume(null)
+                    coro.resume(null as MutableLiveData<forecastDaily>)
                 }
-                Log.i("getForecastDailyApi",response.body().toString())
             }
 
             override fun onFailure(
                 call: Call<forecastDaily>,
                 t: Throwable
             ) {
+                Log.e("getWeatherDataApi", "Error: ${t.message}")
                 createGeneralDialog(
                     ctx,
                     "Problem!!",
@@ -210,12 +175,13 @@ object api2Rep {
                     "Try again",
                     "Cancel"
                 ) {
-                    getDailyForecast(lon, lat, lang, ctx)
+                    // Optional retry logic
                 }
+//                coro.resume(null)
+                coro.resumeWithException(t)
             }
 
-        })
-        return  resApi3
+        })}
     }
 
     fun getCountryGeometric(

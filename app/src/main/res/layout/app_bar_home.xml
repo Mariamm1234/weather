@@ -5,22 +5,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".presentations.home.home">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_marginBottom="10dp"
         android:theme="@style/Theme.Weather.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width = "match_parent"
-            android:background="?attr/colorPrimary"
+            android:background="@color/blue"
               app:popupTheme="@style/Theme.Weather.PopupOverlay"
             android:layout_height = "?attr/actionBarSize" />
 
   </com.google.android.material.appbar.AppBarLayout>
 
+<!--
+
+
+-->
   <include layout="@layout/content_home"/>
 
   <com.google.android.material.floatingactionbutton.FloatingActionButton

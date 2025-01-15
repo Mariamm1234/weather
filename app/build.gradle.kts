@@ -98,5 +98,8 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     // For control over item selection of both touch and mouse driven selection
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
+    implementation("com.squareup.picasso:picasso:2.8")
+    implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation("com.hbb20:ccp:2.5.0")
 //    implementation(" implementation 'com.hbb20:android-country-picker:X.Y.Z")
 }

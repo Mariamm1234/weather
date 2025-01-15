@@ -86,10 +86,4 @@ class AppModule {
         obj.ctx = app
         return obj
     }
-
-    @Singleton
-    @Provides
-    fun provideUseCase(api: apiRepo): GetWeatherData {
-        return GetWeatherData(api)
-    }
 }

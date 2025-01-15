@@ -1,9 +1,10 @@
 package com.example.weather.common
 
-import android.R
+import com.example.weather.R
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+
 import android.content.pm.PackageManager
 import android.health.connect.datatypes.ExerciseRoute
 import android.location.Location
@@ -27,9 +28,19 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import java.util.concurrent.TimeUnit
 import android.app.ProgressDialog
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
+import androidx.viewpager2.widget.ViewPager2
 import com.example.weather.databinding.DialogBinding
+import com.example.weather.presentations.home.TabAdabter
+//import com.example.weather.presentations.home.TabAdabter
+import com.example.weather.presentations.home.home
+import com.example.weather.presentations.home.ui.gallery.GalleryFragment
+import com.example.weather.presentations.home.ui.home.HomeFragment
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import com.hbb20.CountryCodePicker
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -147,9 +158,49 @@ lateinit var alert: AlertDialog
     fun convertToCelesius(temp:Double): String{
 return (temp.minus(273.15).toString().split('.')[0])
     }
-fun countryDialog()
+
+    fun getImageUrl(imgId: String): String{
+        return "https://openweathermap.org/img/wn/${imgId}@2x.png"
+    }
+fun countryPickerDialog(ctx: Context):String
 {
+    val dialogView = LayoutInflater.from(ctx).inflate(R.layout.dialog_country_picker, null)
+    val countryPicker=dialogView.findViewById<CountryCodePicker>(R.id.country_picker)
+var country=""
+
+    val dialog= AlertDialog.Builder(ctx)
+        .setTitle("Select a Country")
+        .setView(dialogView)
+        .setNegativeButton("Cancel", null)
+        .create()
+
+    countryPicker.setOnCountryChangeListener{
+        country=countryPicker.selectedCountryEnglishName
+        home.setCountry(country)
+        Log.i("country",country)
+        GalleryFragment.setCountry(country)
+        countryList.add(country)
+//        home.names.add(country)
+        dialog.dismiss()
+    }
+
+dialog.show()
+//    GalleryFragment.addNewTab()
+   // TabAdabter(GalleryFragment()).addTab(HomeFragment.newInstance(country),country)
+
+return country
 
 }
+    var countryList= HashSet<String>()
+//fun tabLogic(names: List<String>,viewPager: ViewPager2,
+//             tabLayout: TabLayout,
+//             adapter: TabAdabter
+//             )
+//{
+//    viewPager.adapter=adapter
+//    TabLayoutMediator(tabLayout,viewPager){tab,position->
+//        tab.text=names[position]
+//    }.attach()
+//}
 
 }

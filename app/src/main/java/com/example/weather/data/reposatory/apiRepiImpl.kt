@@ -48,11 +48,40 @@ class apiRepiImpl @Inject constructor(
     override suspend fun getForecastFiveDayData(
         lon: Double,
         lat: Double,
-        lang: String
-    ): forecastZone {
-       return api.getForecastFiveDayData(lon,lat,lang)
+        lang: String,
+        ctx: Context
+    ): MutableLiveData<forecastZone> {
+       var mp=apiImpl
+        mp.ctx=ctx
+       var res= MutableLiveData<forecastZone>()
+        runBlocking{
+            var task=
+            async{
+                mp.getForecastForFivedays(lon,lat,lang,ctx)
+            }
+            res=task.await()
+        }
+        return res
     }
 
+    override suspend fun getForecastDaily(
+        lon: Double,
+        lat: Double,
+        lang: String,
+        ctx: Context
+    ): MutableLiveData<forecastDaily> {
+        var mp=apiImpl
+        mp.ctx=ctx
+        var res= MutableLiveData<forecastDaily>()
+        runBlocking{
+            var task=
+                async{
+                    mp.getDailyForecast(lon,lat,lang,ctx)
+                }
+            res=task.await()
+        }
+        return res
+    }
     override suspend fun getGeometrics(
         cityName: String,
         ctx: Context

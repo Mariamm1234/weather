@@ -10,4 +10,6 @@
     <color name="gray">#F3F4F8</color>
     <color name="sky">#89CFF0</color>
     <color name="Vorange">#EF8C1A</color>
+    <color name="blue">#0A3161</color>
+    <color name="light_blue">#3C4B8D</color>
 </resources>

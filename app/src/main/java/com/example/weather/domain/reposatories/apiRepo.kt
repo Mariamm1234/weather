@@ -14,6 +14,7 @@ interface  apiRepo {
 //    suspend fun getWeatherData(lon: Double, lat: Double, lang: String,ctx:Context): weatherZone
 
     suspend fun getWeatherData(lon: Double, lat: Double, lang: String,ctx:Context): MutableLiveData<weatherZone>
-    suspend fun getForecastFiveDayData( lon: Double, lat: Double, lang: String): forecastZone
+    suspend fun getForecastFiveDayData( lon: Double, lat: Double, lang: String,ctx:Context): MutableLiveData<forecastZone>
     suspend fun getGeometrics(cityName:String,ctx: Context):MutableLiveData<List<geoDataItem>>
+    suspend fun getForecastDaily(lon: Double,lat: Double,lang: String,ctx: Context): MutableLiveData<forecastDaily>
 }
